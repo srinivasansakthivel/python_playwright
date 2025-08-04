@@ -20,6 +20,7 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+/utils/secret_config.py
 
 # Virtual Environment
 .venv/
@@ -76,5 +77,3 @@ node_modules/
 *.xml
 reports/
 
-# Secrets
-/utils/secret_config.py
