@@ -1,5 +1,8 @@
 import pytest
 
+import utils.secret_config
+
+
 @pytest.fixture(scope="function")
 def set_up(browser):
     # browser = playwright.chromium.launch(headless=False)
@@ -22,7 +25,7 @@ def login_set_up(set_up, email, password):
     page.get_by_test_id("emailAuth").get_by_role("textbox", name="Email").click()
     page.get_by_test_id("emailAuth").get_by_role("textbox", name="Email").fill(email)
     page.get_by_role("textbox", name="Password").click(timeout=3000)
-    page.get_by_role("textbox", name="Password").fill(password, timeout=2000)
+    page.get_by_role("textbox", name="Password").fill(utils.secret_config.PASSWORD, timeout=2000)
     page.get_by_test_id("submit").get_by_test_id("buttonElement").click()
 
     yield page
