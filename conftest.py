@@ -1,12 +1,14 @@
 import os
-
 import pytest
 
-try:
-    PASSWORD = os.environ['PASSWORD']
-except:
-    import utils.secret_config
-    PASSWORD = utils.secret_config.PASSWORD
+PASSWORD = os.environ['PASSWORD']
+
+# try:
+#     PASSWORD = os.environ['PASSWORD']
+# except:
+#     import utils.secret_config
+#     PASSWORD = utils.secret_config.PASSWORD
+
 
 @pytest.fixture(scope="function")
 def set_up(browser):
@@ -42,5 +44,3 @@ def go_to_new_collection_page(page):
     page.set_default_timeout(30000)
 
     yield page
-
-
