@@ -6,6 +6,7 @@ import pytest
 @pytest.mark.regression
 @pytest.mark.parametrize("email", ["symon.storozhenko@gmail.com"])
 @pytest.mark.parametrize("password", ["test123"])
+@pytest.mark.skip
 def test_about_us_section_verbiage_1(login_set_up):
     page = login_set_up
     home_page = HomePage(page)

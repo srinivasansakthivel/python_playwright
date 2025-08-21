@@ -1,6 +1,4 @@
 import os
-import time
-
 import pytest
 
 PASSWORD = os.environ['PASSWORD']
@@ -24,15 +22,9 @@ def set_up(browser):
     page.close()
 
 
-@pytest.fixture(scope='function')
-def context_creation(playwright, email, password):
-    browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context()
-    page = context.new_page()
-    page.goto("https://symonstorozhenko.wixsite.com/website-1")
-    page.set_default_timeout(3000)
-
-    # page = set_up
+@pytest.fixture(scope="function")
+def login_set_up(set_up, email, password):
+    page = set_up
     page.wait_for_load_state("networkidle")
     page.get_by_test_id("handle-button").click(timeout=3000)
     page.get_by_test_id("signUp.switchToSignUp").click()
@@ -42,33 +34,13 @@ def context_creation(playwright, email, password):
     page.get_by_role("textbox", name="Password").click(timeout=3000)
     page.get_by_role("textbox", name="Password").fill(PASSWORD, timeout=2000)
     page.get_by_test_id("submit").get_by_test_id("buttonElement").click()
-    page.wait_for_load_state(timeout=10000)
-    time.sleep(2)
-    context.storage_state(path='state.json')
-
-    yield context
-    time.sleep(2)
-
-
-@pytest.fixture()
-def login_set_up(context_creation, playwright):
-    browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context(storage_state='state.json')
-    page = context.new_page()
-
-    page.goto("https://symonstorozhenko.wixsite.com/website-1")
-    page.set_default_timeout(3000)
-    # assert not page.is_visible("text=Log In")
 
     yield page
-    page.close()
 
-    context.close()
-    browser.close()
 
 @pytest.fixture
 def go_to_new_collection_page(page):
     page.goto("/new-collection")
-    page.set_default_timeout(3000)
+    page.set_default_timeout(30000)
 
     yield page

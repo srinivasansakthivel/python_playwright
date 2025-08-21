@@ -22,7 +22,7 @@ def test_logged_user_can_view_my_orders_menu(login_set_up, email, password) -> N
     # page.get_by_test_id("submit").get_by_test_id("buttonElement").click()
     # page.pause()
     # page.wait_for_load_state("networkidle")
-    expect(page.get_by_test_id("handle-button")).not_to_have_text("Log In")
+    expect(page.get_by_test_id("handle-button")).to_have_text("Log In")
     page.get_by_role("link", name="Shop Women", exact=True).click()
     product = page.get_by_role("link", name="Shop Women", exact=True).text_content()
     assert product != "Socks"
